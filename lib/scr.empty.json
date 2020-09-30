@@ -1,0 +1,12 @@
+{
+  "type": "ssr",
+  "services": [],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      []
+    ],
+    "bbox": []
+  },
+  "altitude": 0
+}
