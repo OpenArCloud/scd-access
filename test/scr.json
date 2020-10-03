@@ -1,0 +1,17 @@
+{
+  "type": "scr",
+  "content": {
+    "id": "123",
+    "type": "4d",
+    "title": "title",
+    "url": "http://www.example.com",
+    "geopose": {
+      "longitude": 1,
+      "latitude": 2,
+      "ellipsoidHeight": 3,
+      "quaternion": [
+        1, 2, 3, 4
+      ]
+    }
+  }
+}

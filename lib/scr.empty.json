@@ -1,12 +1,17 @@
 {
-  "type": "ssr",
-  "services": [],
-  "geometry": {
-    "type": "Polygon",
-    "coordinates": [
-      []
-    ],
-    "bbox": []
-  },
-  "altitude": 0
+  "type": "scr",
+  "content": {
+    "id": "",
+    "type": "",
+    "title": "",
+    "url": "",
+    "geopose": {
+      "longitude": 0,
+      "latitude": 0,
+      "ellipsoidHeight": 0,
+      "quaternion": [
+        0, 0, 0, 0
+      ]
+    }
+  }
 }
