@@ -1,4 +1,4 @@
-Simple library aiming to make access to the spatial service discovery as 
+Simple library aiming to make access to the spatial content discovery as 
 easy as possible. Currently verifying if it actually makes sense.
 
 
@@ -7,29 +7,29 @@ Compatibility with other packagers and with Node on the server side is planned.
 
 
 ### Currently available functions are:
-    getServicesAtLocation(countryCode, h3Index)
+    getServicesAtLocation(topic, h3Index)
 Requests services available around H3Index from the regional server for the provided 
 countryCode
 
-    function getServiceWithId(countryCode, id)
+    function getServiceWithId(topic, id)
 Requests service with provided id from the regional server for the provided countryCode
 
-    function postService(countryCode, ssr, token)
+    function postService(topic, scr, token)
 Post a service to Spatial Services Discovery server of provided region
 
-    function postSsrFile(countryCode, file, token)
+    function postScrFile(topic, file, token)
 Post the content of a .json file to Spatial Services Discovery server of provided region
 
-    function putService(countryCode, ssr, id, token)
+    function putService(topic, scr, id, token)
 Send an edited SSR record to the server
 
-    function validateSsr(ssr, fileName = '')
+    function validateScr(scr, fileName = '')
 Validate the provided Spatial Services Record against the SSR json schema 
 
-    function searchServicesForTenant(countryCode, token)
+    function searchServicesForTenant(topic, token)
 Request all services for the current tenant in the provided region
 
-    function deleteWithId(countryCode, id, token)
+    function deleteWithId(topic, id, token)
 Delete the record with the provided id and region
 
 
@@ -40,13 +40,13 @@ To use the authentication, create an .env file at the root of your project and a
 values:
 
 ```
-AUTH0_DOMAIN = 
-AUTH0_CLIENTID = 
-AUTH0_AUDIENCE = 
-AUTH0_SCOPE = 
+AUTH0_SCD_DOMAIN = 
+AUTH0_SCD_CLIENTID = 
+AUTH0_SCD_AUDIENCE = 
+AUTH0_SCD_SCOPE = 
 ```
 
-We use in rollup replace to replace the placeholders with the specific values during 
+We use rollup replace to replace the placeholders with the specific values during 
 packaging of the browser app.
 
 
@@ -67,9 +67,7 @@ The user record from auth0
 
 
 ### New with this version:
-- Added official geojson polygon schema to the SSR schema
-- Delete function
--Put function
+- First publish
 
 
 ### More information about the discovery services used can be found here:
