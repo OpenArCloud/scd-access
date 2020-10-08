@@ -34,10 +34,22 @@
             "type": "string"
           }
         },
-        "url": {
-          "type": "string",
-          "format": "uri",
-          "default": ""
+        "refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": [{
+            "type": "object",
+            "properties": {
+              "contentType": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "required": ["contentType", "url"]
+          }]
         },
         "geopose": {
           "type": "object",
@@ -74,7 +86,7 @@
           "default": ""
         }
       },
-      "required": ["id", "type", "title", "url", "geopose"]
+      "required": ["id", "type", "title", "refs", "geopose"]
     }
   },
   "required": [ "type", "content" ]

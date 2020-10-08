@@ -4,7 +4,10 @@
     "id": "123",
     "type": "4d",
     "title": "title",
-    "url": "http://www.example.com",
+    "refs": [{
+      "contentType": "3D",
+      "url": "http://www.example.com/mesh.gltf"
+    }],
     "geopose": {
       "longitude": 1,
       "latitude": 2,

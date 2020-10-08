@@ -6,6 +6,10 @@ This module will very likely only run in a browser using rollup right now.
 Compatibility with other packagers and with Node on the server side is planned.
 
 
+### New with this version:
+- Implementing changes of SRC - url > refs[]
+
+
 ### Currently available functions are:
     getServicesAtLocation(topic, h3Index)
 Requests services available around H3Index from the regional server for the provided 
@@ -64,10 +68,6 @@ true when client is logged in
 
     user
 The user record from auth0
-
-
-### New with this version:
-- First publish
 
 
 ### More information about the discovery services used can be found here:
