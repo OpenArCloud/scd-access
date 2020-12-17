@@ -7,7 +7,8 @@ Compatibility with other packagers and with Node on the server side is planned.
 
 
 ### New with this version:
-- Implementing changes of SRC - url > refs[]
+- Addition of optional placekey parameter (As placekey is only fully supported in the US,
+no further handling of the placekey for now)
 
 
 ### Currently available functions are:
@@ -25,10 +26,10 @@ Post a service to Spatial Services Discovery server of provided region
 Post the content of a .json file to Spatial Services Discovery server of provided region
 
     function putService(topic, scr, id, token)
-Send an edited SSR record to the server
+Send an edited SCR record to the server
 
     function validateScr(scr, fileName = '')
-Validate the provided Spatial Services Record against the SSR json schema 
+Validate the provided Spatial Services Record against the SCR json schema 
 
     function searchServicesForTenant(topic, token)
 Request all services for the current tenant in the provided region

@@ -34,6 +34,10 @@
             "type": "string"
           }
         },
+        "placekey": {
+          "type": "string",
+          "default": ""
+        },
         "refs": {
           "type": "array",
           "minItems": 1,
