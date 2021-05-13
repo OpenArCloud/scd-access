@@ -40,7 +40,6 @@
         },
         "refs": {
           "type": "array",
-          "minItems": 1,
           "items": [{
             "type": "object",
             "properties": {
@@ -71,12 +70,26 @@
               "default": 0
             },
             "quaternion": {
-              "type": "array",
-              "minItems": 4,
-              "maxItems": 4,
-              "items": {
-                "type": "number"
-              }
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number",
+                  "default": 0
+                },
+                "y": {
+                  "type": "number",
+                  "default": 0
+                },
+                "z": {
+                  "type": "number",
+                  "default": 0
+                },
+                "w": {
+                  "type": "number",
+                  "default": 1
+                }
+              },
+              "required": ["x", "y", "z", "w"]
             }
           },
           "required": ["longitude", "latitude", "ellipsoidHeight", "quaternion"]
@@ -88,6 +101,21 @@
         "bbox": {
           "type": "string",
           "default": ""
+        },
+        "definitions": {
+          "type": "array",
+          "items": [{
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": ["type", "value"]
+          }]
         }
       },
       "required": ["id", "type", "title", "refs", "geopose"]

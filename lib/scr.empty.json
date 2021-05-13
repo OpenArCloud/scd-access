@@ -5,13 +5,12 @@
     "type": "",
     "title": "",
     "refs": [],
+    "definitions": [],
     "geopose": {
       "longitude": 0,
       "latitude": 0,
       "ellipsoidHeight": 0,
-      "quaternion": [
-        0, 0, 0, 0
-      ]
+      "quaternion": {"x": 0, "y": 0, "z": 0, "w": 1}
     }
   }
 }

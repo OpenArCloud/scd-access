@@ -7,8 +7,9 @@ Compatibility with other packagers and with Node on the server side is planned.
 
 
 ### New with this version:
-- Addition of optional placekey parameter (As placekey is only fully supported in the US,
-no further handling of the placekey for now)
+- Applying changes to SCD
+- Quaternion in object notation
+- Addition of property `definition`
 
 
 ### Currently available functions are:
