@@ -9,35 +9,36 @@ Compatibility with other packagers and with Node on the server side is planned.
 ### New with this version:
 - **Breaking changes**
 - Replace `service` in function names with `content`
+- Add URL of Content Discovery to use as a parameter to the functions
 - Rename `localServices` and `localService` to `localResults` and `localResult`
 - Change constant `SCR_URL` to variable `scrUrl` and export it. Allows accessing 
   different content discovery services 
 
 
 ### Currently available functions are:
-    getContentAtLocation(topic, h3Index)
+    getContentAtLocation(url, topic, h3Index)
 Requests content available around H3Index from the regional server for the provided 
 countryCode
 
-    function getContentWithId(topic, id)
+    function getContentWithId(url, topic, id)
 Requests content with provided id from the regional server for the provided countryCode
 
-    function postContent(topic, scr, token)
+    function postContent(url, topic, scr, token)
 Post a content to Spatial Content Discovery server of provided region
 
-    function postScrFile(topic, file, token)
+    function postScrFile(url, topic, file, token)
 Post the content of a .json file to Spatial Content Discovery server of provided region
 
-    function putContent(topic, scr, id, token)
+    function putContent(url, topic, scr, id, token)
 Send an edited SCR record to the server
 
     function validateScr(scr, fileName = '')
 Validate the provided Spatial Content Record against the SCR json schema 
 
-    function searchContentForTenant(topic, token)
+    function searchContentForTenant(url, topic, token)
 Request all content for the current tenant in the provided region
 
-    function deleteWithId(topic, id, token)
+    function deleteWithId(url, topic, id, token)
 Delete the record with the provided id and region
 
 
