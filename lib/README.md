@@ -7,33 +7,35 @@ Compatibility with other packagers and with Node on the server side is planned.
 
 
 ### New with this version:
-- Applying changes to SCD
-- Quaternion in object notation
-- Addition of property `definition`
+- **Breaking changes**
+- Replace `service` in function names with `content`
+- Rename `localServices` and `localService` to `localResults` and `localResult`
+- Change constant `SCR_URL` to variable `scrUrl` and export it. Allows accessing 
+  different content discovery services 
 
 
 ### Currently available functions are:
-    getServicesAtLocation(topic, h3Index)
-Requests services available around H3Index from the regional server for the provided 
+    getContentAtLocation(topic, h3Index)
+Requests content available around H3Index from the regional server for the provided 
 countryCode
 
-    function getServiceWithId(topic, id)
-Requests service with provided id from the regional server for the provided countryCode
+    function getContentWithId(topic, id)
+Requests content with provided id from the regional server for the provided countryCode
 
-    function postService(topic, scr, token)
-Post a service to Spatial Services Discovery server of provided region
+    function postContent(topic, scr, token)
+Post a content to Spatial Content Discovery server of provided region
 
     function postScrFile(topic, file, token)
-Post the content of a .json file to Spatial Services Discovery server of provided region
+Post the content of a .json file to Spatial Content Discovery server of provided region
 
-    function putService(topic, scr, id, token)
+    function putContent(topic, scr, id, token)
 Send an edited SCR record to the server
 
     function validateScr(scr, fileName = '')
-Validate the provided Spatial Services Record against the SCR json schema 
+Validate the provided Spatial Content Record against the SCR json schema 
 
-    function searchServicesForTenant(topic, token)
-Request all services for the current tenant in the provided region
+    function searchContentForTenant(topic, token)
+Request all content for the current tenant in the provided region
 
     function deleteWithId(topic, id, token)
 Delete the record with the provided id and region
