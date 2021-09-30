@@ -1,5 +1,5 @@
 {
-  "name": "scd-access",
+  "name": "@oarc/scd-access",
   "version": "0.0.5",
   "description": "Access to Spatial Content Discovery of Open Spatial Computing Platform",
   "main": "index.js",
