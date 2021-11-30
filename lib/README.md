@@ -5,8 +5,10 @@ easy as possible. Currently verifying if it actually makes sense.
 This module will very likely only run in a browser using rollup right now. 
 Compatibility with other packagers and with Node on the server side is planned.
 
+### New with version 0.1.1:
+- Auth0 context must be set from the application that calls this library
 
-### New with this version:
+### New with version 0.1.0:
 - **Breaking changes**
 - Replace `service` in function names with `content`
 - Add URL of Content Discovery to use as a parameter to the functions
