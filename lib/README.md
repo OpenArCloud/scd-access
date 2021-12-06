@@ -5,8 +5,18 @@ easy as possible. Currently verifying if it actually makes sense.
 This module will very likely only run in a browser using rollup right now. 
 Compatibility with other packagers and with Node on the server side is planned.
 
+### New with version 0.1.2:
+- **breaking changes**
+- changed service URLs to contain `scrsPath`
+- renamed `searchContentForTenant` to `searchContentsForTenant`
+- renamed `getContentAtLocation` to `getContentsAtLocation` but kept the old one for compatibility
+- small fixes, formatting, comments
+- update README.md
+
 ### New with version 0.1.1:
+- **breaking changes**
 - Auth0 context must be set from the application that calls this library
+- Added URL of Content Discovery to use as a parameter to the functions
 
 ### New with version 0.1.0:
 - **Breaking changes**
@@ -18,7 +28,7 @@ Compatibility with other packagers and with Node on the server side is planned.
 
 
 ### Currently available functions are:
-    getContentAtLocation(url, topic, h3Index)
+    function getContentsAtLocation(url, topic, h3Index)
 Requests content available around H3Index from the regional server for the provided 
 countryCode
 
@@ -37,8 +47,8 @@ Send an edited SCR record to the server
     function validateScr(scr, fileName = '')
 Validate the provided Spatial Content Record against the SCR json schema 
 
-    function searchContentForTenant(url, topic, token)
-Request all content for the current tenant in the provided region
+    function searchContentsForTenant(url, topic, token)
+Request all content for the current tenant in the provided topic
 
     function deleteWithId(url, topic, id, token)
 Delete the record with the provided id and region
@@ -46,28 +56,22 @@ Delete the record with the provided id and region
 
 ### Authentication
 
-The spatial discovery services use auth0 for authentication. It uses the spa SDK from auth0. 
-To use the authentication, create an .env file at the root of your project and add these 
-values:
-
+The spatial discovery services use [Auth0](https://auth0.com) for authentication. It uses the [single page app SDK](https://auth0.com/docs/libraries/auth0-single-page-app-sdk) from Auth0. In your main application, you can read the Auth0 configuration from a .env file containing these values:
 ```
 AUTH0_SCD_DOMAIN = 
 AUTH0_SCD_CLIENTID = 
 AUTH0_SCD_AUDIENCE = 
 AUTH0_SCD_SCOPE = 
 ```
+and then you can pass these values to this library in the `init` method:
 
-We use rollup replace to replace the placeholders with the specific values during 
-packaging of the browser app.
-
-
-    function init()
+    function init(auth_domain, auth_client_id, auth_audience, auth_scope))
 Instantiate and initialize the auth0 object, used for login/logout and api access
 
     function login()
     function logout()
 
-    getToken()
+    function getToken()
 Returns the auth0 access token
 
     authenticated
