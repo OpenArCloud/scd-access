@@ -5,6 +5,9 @@ easy as possible. Currently verifying if it actually makes sense.
 This module will very likely only run in a browser using rollup right now. 
 Compatibility with other packagers and with Node on the server side is planned.
 
+### New with version 0.1.5:
+- fixed potential URL problems in getContentsAtLocation()
+
 ### New with version 0.1.2:
 - **breaking changes**
 - changed service URLs to contain `scrsPath`
