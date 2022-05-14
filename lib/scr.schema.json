@@ -57,17 +57,21 @@
         "geopose": {
           "type": "object",
           "properties": {
-            "longitude": {
-              "type": "number",
-              "default": 0
-            },
-            "latitude": {
-              "type": "number",
-              "default": 0
-            },
-            "ellipsoidHeight": {
-              "type": "number",
-              "default": 0
+            "position": {
+              "type": "object",
+              "lon": {
+                "type": "number",
+                "default": 0
+              },
+              "lat": {
+                "type": "number",
+                "default": 0
+              },
+              "h": {
+                "type": "number",
+                "default": 0
+              },
+              "required": ["lon", "lat", "h"]
             },
             "quaternion": {
               "type": "object",
@@ -92,7 +96,7 @@
               "required": ["x", "y", "z", "w"]
             }
           },
-          "required": ["longitude", "latitude", "ellipsoidHeight", "quaternion"]
+          "required": ["position", "quaternion"]
         },
         "size": {
           "type": "number",
@@ -104,7 +108,7 @@
         },
         "definitions": {
           "type": "array",
-          "items": [{
+          "items": {
             "type": "object",
             "properties": {
               "type": {
@@ -115,7 +119,7 @@
               }
             },
             "required": ["type", "value"]
-          }]
+          }
         }
       },
       "required": ["id", "type", "title", "refs", "geopose"]
