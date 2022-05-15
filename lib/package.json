@@ -1,6 +1,6 @@
 {
   "name": "@oarc/scd-access",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "Access to Spatial Content Discovery of Open Spatial Computing Platform",
   "main": "index.js",
   "type": "module",
@@ -25,6 +25,7 @@
   "homepage": "https://github.com/OpenArCloud/scd-access#readme",
   "dependencies": {
     "ajv": "^8.11.0",
+    "ajv-formats": "^2.1.1",
     "@auth0/auth0-spa-js": "^1.21.1"
   }
 }
