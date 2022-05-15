@@ -59,17 +59,19 @@
           "properties": {
             "position": {
               "type": "object",
-              "lon": {
-                "type": "number",
-                "default": 0
-              },
-              "lat": {
-                "type": "number",
-                "default": 0
-              },
-              "h": {
-                "type": "number",
-                "default": 0
+              "properties": {
+                "lon": {
+                  "type": "number",
+                  "default": 0
+                },
+                "lat": {
+                  "type": "number",
+                  "default": 0
+                },
+                "h": {
+                  "type": "number",
+                  "default": 0
+                }
               },
               "required": ["lon", "lat", "h"]
             },
