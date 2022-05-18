@@ -9,11 +9,13 @@
       "url": "http://www.example.com/mesh.gltf"
     }],
     "geopose": {
-      "longitude": 1,
-      "latitude": 2,
-      "ellipsoidHeight": 3,
+      "position": {
+        "lon": 48.20844482034553,
+        "lat": 16.37345663470299,
+        "h": 136
+      },
       "quaternion": [
-        1, 2, 3, 4
+        0, 0, 0, 1
       ]
     }
   }
