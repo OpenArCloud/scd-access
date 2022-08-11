@@ -40,7 +40,8 @@
         },
         "refs": {
           "type": "array",
-          "items": [{
+          "default": [],
+          "items": {
             "type": "object",
             "properties": {
               "contentType": {
@@ -52,7 +53,7 @@
               }
             },
             "required": ["contentType", "url"]
-          }]
+          }
         },
         "geopose": {
           "type": "object",
