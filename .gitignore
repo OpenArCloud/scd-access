@@ -6,3 +6,5 @@
 /favicon.png
 /.idea/workspace.xml
 /tests/
+/lib/node_modules/
+lib/dist/**
