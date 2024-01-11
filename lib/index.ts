@@ -59,8 +59,8 @@ export const scrSchema = z.object({
     id: z.string(),
     type: z.string(),
     content: contentSchema,
-    tenant: z.string(),
-    timestamp: z.number(),
+    tenant: z.string().optional(),
+    timestamp: z.number().optional(),
 });
 
 export type SCR = z.infer<typeof scrSchema>;
