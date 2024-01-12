@@ -55,15 +55,19 @@ export const contentSchema = z.object({
     definitions: z.array(defSchema).optional(),
 });
 
-export const scrSchema = z.object({
-    id: z.string(),
+export const scrNoIdSchema = z.object({
     type: z.string(),
     content: contentSchema,
     tenant: z.string().optional(),
     timestamp: z.number().optional(),
 });
 
+export const scrSchema = scrNoIdSchema.extend({
+    id: z.string(),
+});
+
 export type SCR = z.infer<typeof scrSchema>;
+export type SCRnoId = z.infer<typeof scrNoIdSchema>;
 export type Content = z.infer<typeof contentSchema>;
 export type Def = z.infer<typeof defSchema>;
 export type Ref = z.infer<typeof refSchema>;
@@ -150,16 +154,17 @@ export async function searchContentsForTenant(url: string, topic: string, token:
  *
  * When the global variable `local` is set to true, no server access is done, but an immediate ok returned.
  */
-export async function postContent(url: string, topic: string, scr: string, token: string) {
+export async function postContent(url: string, topic: string, scr: SCRnoId, token: string) {
     if (local) {
         return 'OK';
     }
 
-    if (scr === undefined || scr.length === 0 || token === undefined || token.length === 0) {
-        throw new Error(`Check parameters: ${scr}, ${token}`);
+    if (token === undefined || token.length === 0) {
+        throw new Error(`Check parameter: ${token}`);
     }
+    scrNoIdSchema.parse(scr);
 
-    const response = await request(`${url}/${scrsPath}/${topic}`, POST_METHOD, scr, token);
+    const response = await request(`${url}/${scrsPath}/${topic}`, POST_METHOD, JSON.stringify(scr), token);
     return await response.text();
 }
 
@@ -170,23 +175,25 @@ export async function postContent(url: string, topic: string, scr: string, token
  */
 export async function postScrFile(url: string, topic: string, file: File, token: string) {
     const result = await getFileContent(file);
-    validateScr(result, file.name);
-    return await postContent(url, topic, result, token);
+    const parsedResult = JSON.parse(result);
+    const scrNoId = scrNoIdSchema.parse(parsedResult);
+    return await postContent(url, topic, scrNoId, token);
 }
 
 /**
  * Put a single content record (SCR) to the server into the provided topic
  */
-export async function putContent(url: string, topic: string, scr: string, id: string, token: string) {
+export async function putContent(url: string, topic: string, scr: SCR, id: string, token: string) {
     if (local) {
         return Promise.resolve('OK');
     }
 
-    if (scr === undefined || scr.length === 0 || id === undefined || id.length === 0 || token === undefined || token.length === 0) {
-        throw new Error(`Check parameters: ${scr}, ${id} ${token}`);
+    if (id === undefined || id.length === 0 || token === undefined || token.length === 0) {
+        throw new Error(`Check parameters: ${id}, ${token}`);
     }
+    scrSchema.parse(scr);
 
-    return request(`${url}/${scrsPath}/${topic}/${id}`, PUT_METHOD, scr, token).then(async (response) => await response.text());
+    return request(`${url}/${scrsPath}/${topic}/${id}`, PUT_METHOD, JSON.stringify(scr), token).then(async (response) => await response.text());
 }
 
 /**
@@ -195,18 +202,6 @@ export async function putContent(url: string, topic: string, scr: string, id: st
 export async function deleteWithId(url: string, topic: string, id: string, token: string) {
     const response = await request(`${url}/${scrsPath}/${topic}/${id}`, DELETE_METHOD, '', token);
     return await response.text();
-}
-
-/**
- * Validate the provided SCR against a json schema
- */
-export function validateScr(scr: string, fileName = '') {
-    try {
-        scrSchema.parse(JSON.parse(scr));
-        return true;
-    } catch (error) {
-        throw new Error(`Unable to parse file content: ${fileName}, ${error}`);
-    }
 }
 
 /**
