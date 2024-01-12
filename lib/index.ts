@@ -160,7 +160,7 @@ export async function postContent(url: string, topic: string, scr: SCRnoId, toke
     }
 
     if (token === undefined || token.length === 0) {
-        throw new Error(`Check parameter: ${token}`);
+        throw new Error(`token is invalid: ${token}`);
     }
     scrNoIdSchema.parse(scr);
 
@@ -189,7 +189,7 @@ export async function putContent(url: string, topic: string, scr: SCR, id: strin
     }
 
     if (id === undefined || id.length === 0 || token === undefined || token.length === 0) {
-        throw new Error(`Check parameters: ${id}, ${token}`);
+        throw new Error(`Check parameters. id: ${id}, token: ${token}`);
     }
     scrSchema.parse(scr);
 
