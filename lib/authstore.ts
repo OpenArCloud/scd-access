@@ -1,7 +1,11 @@
 /*
- * (c) 2020 Open AR Cloud
- * This code is licensed under MIT license (see LICENSE.md for details)
- */
+  (c) 2020 Open AR Cloud
+  This code is licensed under MIT license (see LICENSE.md for details)
+
+  (c) 2024 Nokia
+  Licensed under the MIT License
+  SPDX-License-Identifier: MIT
+*/
 
 import { writable } from 'svelte/store';
 import createAuth0Client, { Auth0Client, User } from '@auth0/auth0-spa-js';

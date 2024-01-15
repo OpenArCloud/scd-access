@@ -1,8 +1,8 @@
 {
   "name": "@oarc/scd-access",
-  "version": "0.1.11",
+  "version": "0.2.0",
   "description": "Access to Spatial Content Discovery of Open Spatial Computing Platform",
-  "main": "dist/index.js",
+  "main": "dist/index.ts",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

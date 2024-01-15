@@ -1,5 +1,11 @@
-// (c) 2020 Open AR Cloud
-// This code is licensed under MIT license (see LICENSE.md for details)
+/*
+  (c) 2020 Open AR Cloud
+  This code is licensed under MIT license (see LICENSE.md for details)
+
+  (c) 2024 Nokia
+  Licensed under the MIT License
+  SPDX-License-Identifier: MIT
+*/
 
 /**
  Main access point to the spatial discovery services of the Open Spatial Computing Platform.
