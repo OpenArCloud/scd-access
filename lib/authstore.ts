@@ -8,7 +8,7 @@
 */
 
 import { writable } from 'svelte/store';
-import createAuth0Client, { Auth0Client, User } from '@auth0/auth0-spa-js';
+import { createAuth0Client, Auth0Client, User } from '@auth0/auth0-spa-js';
 
 export const authStore = createAuthStore();
 
@@ -27,27 +27,32 @@ function createAuthStore(): {
 
     // The application using this library should pass the settings as parameters here
     async function init(auth_domain: string, auth_client_id: string, auth_audience: string, auth_scope: string) {
-        auth0 = await createAuth0Client({
+        const client = await createAuth0Client({
             domain: auth_domain,
-            client_id: auth_client_id,
-            audience: auth_audience,
-            scope: auth_scope,
+            clientId: auth_client_id,
+            authorizationParams: {
+                audience: auth_audience,
+                scope: auth_scope,
+            },
         });
+        auth0 = client;
 
         const query = window.location.search;
         if (query.includes('code=') && query.includes('state=')) {
-            await auth0.handleRedirectCallback();
+            await client.handleRedirectCallback();
             window.history.replaceState({}, document.title, '/scd');
         }
 
-        user.set(await auth0.getUser());
-        authenticated.set(await auth0.isAuthenticated());
+        user.set(await client.getUser());
+        authenticated.set(await client.isAuthenticated());
     }
 
     async function login() {
         await auth0
             ?.loginWithRedirect({
-                redirect_uri: `${window.location.origin}/scd/`,
+                authorizationParams: {
+                    redirect_uri: `${window.location.origin}/scd/`,
+                },
             })
             ?.catch((err) => {
                 console.log('Log in failed', err);
@@ -57,7 +62,9 @@ function createAuthStore(): {
     async function logout() {
         await auth0
             ?.logout({
-                returnTo: window.location.origin,
+                logoutParams: {
+                    returnTo: window.location.origin,
+                },
             })
             ?.catch((err) => {
                 console.log('Log out failed', err);
