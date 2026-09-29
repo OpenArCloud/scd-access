@@ -124,9 +124,24 @@ export const framedPoseSchema = z.preprocess(
         .passthrough()
 );
 
+/**
+ * Absolute http(s) URL, or a root-relative path in the client public folder.
+ * Protocol-relative URLs (`//host/...`) are rejected.
+ * Keep this pattern aligned with `RefDto` in oscp-spatial-content-discovery and `scr.schema.json`.
+ *
+ * Accepted examples:
+ * - `https://www.example.com/cat.glb`
+ * - `http://www.example.com/mesh.gltf`
+ * - `https://example.com:8080/a/b.glb?x=1&y=2#frag`
+ * - `/media/pointclouds/cloud1.ply`
+ * - `/media/video/video_Nokia105.mp4`
+ * - `/file%20name.glb`
+ */
+export const refUrlPattern = /^(https?:\/\/[^\s]+|\/(?!\/)[\w\-./%~]+)$/;
+
 export const refSchema = z.object({
     contentType: z.string(),
-    url: z.string().url(),
+    url: z.string().regex(refUrlPattern, 'url must be an absolute http(s) URL or a root-relative client public path'),
 });
 
 export const defSchema = z.object({
@@ -206,6 +221,53 @@ const PUT_METHOD = 'put';
 const DELETE_METHOD = 'delete';
 
 const scrsPath = 'scrs';
+
+/** Topic lists already fetched, keyed by SCD base URL. */
+const supportedTopicsByServer = new Map<string, string[]>();
+
+function resolveBaseUrl(url: string): string {
+    const baseUrl = url.trim().replace(/\/+$/, '');
+    if (baseUrl === '') {
+        throw new Error('SCD URL is not set');
+    }
+    return baseUrl;
+}
+
+function parseTopicList(payload: unknown, url: string): string[] {
+    if (!Array.isArray(payload) || payload.some((topic) => typeof topic !== 'string' || topic.trim() === '')) {
+        throw new Error(`GET ${url}/topics returned an invalid topic list`);
+    }
+    return payload.map((topic) => topic.trim().toLowerCase());
+}
+
+/**
+ * Topic names served by one SCD instance (`GET /topics`).
+ * Results are cached per server URL, so several SCD hosts keep separate lists.
+ */
+export async function getSupportedTopics(url: string): Promise<string[]> {
+    const baseUrl = resolveBaseUrl(url);
+    const cached = supportedTopicsByServer.get(baseUrl);
+    if (cached) {
+        return [...cached];
+    }
+
+    const response = await request(`${baseUrl}/topics`);
+    const topics = parseTopicList(await response.json(), baseUrl);
+    supportedTopicsByServer.set(baseUrl, topics);
+    return [...topics];
+}
+
+/**
+ * Whether `topic` is served by the SCD instance at `url`.
+ * Comparison is case-insensitive, matching the server's lowercasing of topic path parameters.
+ */
+export async function isSupportedTopic(url: string, topic: string): Promise<boolean> {
+    if (topic === undefined || topic.trim() === '') {
+        return false;
+    }
+    const topics = await getSupportedTopics(url);
+    return topics.includes(topic.trim().toLowerCase());
+}
 
 /**
  * Requests the available contents in the provided location for a specific topic
@@ -328,7 +390,9 @@ export async function deleteWithId(url: string, topic: string, id: string, token
  */
 async function request(url: string, method = GET_METHOD, body = '', token: string | undefined = undefined) {
     let headers = new Headers();
-    headers.append('accept', 'application/vnd.oscp+json; version=1.0;');
+    // The OSCP type should be application/vnd.oscp+json; version=1.0, but we also accept application/json
+    // to be compatible with older SCD services.
+    headers.append('accept', 'application/json, application/vnd.oscp+json; version=1.0');
     headers.append('content-type', 'application/json');
 
     if (token) {
@@ -343,7 +407,10 @@ async function request(url: string, method = GET_METHOD, body = '', token: strin
 
     const response = await fetch(url, options);
     if (!response.ok) {
-        throw new Error(`${await response.text()}, ${response.statusText}`);
+        const detail = await response.text();
+        throw new Error(
+            `${method.toUpperCase()} ${url} failed (${response.status} ${response.statusText})${detail ? `: ${detail}` : ''}`,
+        );
     }
     return response;
 }
